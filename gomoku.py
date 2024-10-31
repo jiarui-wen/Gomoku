@@ -37,8 +37,7 @@ def is_bounded(board, y_end, x_end, length, d_y, d_x):
         return "CLOSED"
     elif end_bounded != start_bounded:
         return "SEMIOPEN"
-    else:
-        return "OPEN"
+    return "OPEN"
 
 # def detect_row(board, col, y_start, x_start, length, d_y, d_x):
 #
