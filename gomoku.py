@@ -16,12 +16,13 @@ def is_empty(board):
                 return False
     return True
 
-def is_full(board):
+def emptyspaces(board):
+    L=[]
     for r_list in board:
         for c in r_list:
             if c == " ":
-                return False
-    return True
+                L.append(c)
+    return L
 
 
 
@@ -45,6 +46,8 @@ def is_bounded(board, y_end, x_end, length, d_y, d_x):
     elif end_bounded != start_bounded:
         return "SEMIOPEN"
     return "OPEN"
+
+
 
 # def detect_row(board, col, y_start, x_start, length, d_y, d_x):
 #
@@ -140,6 +143,8 @@ def detect_row(board, col, y_start, x_start, length, d_y, d_x):
 
     return open_seq_count, semi_open_seq_count
 
+
+
 def detect_rows(board, col, length):
     open_seq_count = 0
     semi_open_seq_count = 0
@@ -161,9 +166,23 @@ def detect_rows(board, col, length):
 
     return open_seq_count, semi_open_seq_count
 
+
+
 def search_max(board):
-    pass
-    #return move_y, move_x
+    Li = emptyspaces(board)
+    move_y, move_x = Li[0][0],Li[0][1]
+    board[move_y][move_x] = "b"
+    maxscore = score(board)
+    board[move_y][move_x] = " "
+    for e in Li:
+        board[e[0]][e[1]] = "b"
+        if score(board)>maxscore:
+            maxscore = score(board)
+            move_y, move_x = e[0], e[1]
+        board[e[0]][e[1]] = " "
+    return move_y, move_x
+
+
 
 def score(board):
     MAX_SCORE = 100000
@@ -199,11 +218,21 @@ def is_win(board):
         return "White Won"
     elif colourwin("b",board):
         return "Black Won"
-    elif is_full(board):
+    elif len(emptyspaces(board))==0:
         return "Draw"
     return "Continue Playing"
 
 def colourwin(col, board):
+    for i in range(len(board)-5):
+        for j in range(len(board[0])-5):
+            if board[i][j]==col and board[i][j+1]==col and board[i][j+2]==col and board[i][j+3]==col and board[i][j+4]==col:
+                return True
+            if board[i][j]==col and board[i+1][j]==col and board[i+2][j]==col and board[i+3][j]==col and board[i+4][j]==col:
+                return True
+            if board[i][j]==col and board[i+1][j+1]==col and board[i+2][j+2]==col and board[i+3][j+3]==col and board[i+4][j+4]==col:
+                return True
+            if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
+                return True
     pass
 
 
@@ -292,6 +321,7 @@ def put_seq_on_board(board, y, x, d_y, d_x, length, col):
         board[y][x] = col
         y += d_y
         x += d_x
+
 
 
 def test_is_empty():
