@@ -156,7 +156,8 @@ def detect_rows(board, col, length):
     return open_seq_count, semi_open_seq_count
 
 def search_max(board):
-    return move_y, move_x
+    pass
+    #return move_y, move_x
 
 def score(board):
     MAX_SCORE = 100000
@@ -164,7 +165,7 @@ def score(board):
     open_b = {}
     semi_open_b = {}
     open_w = {}
-    semi_open_b = {}
+    semi_open_w = {}
 
     for i in range(2, 6):
         open_b[i], semi_open_b[i] = detect_rows(board, "b", i)
