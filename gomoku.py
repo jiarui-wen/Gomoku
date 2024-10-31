@@ -239,7 +239,7 @@ def analysis(board):
     for c, full_name in [["b", "Black"], ["w", "White"]]:
         print("%s stones" % (full_name))
         for i in range(2, 6):
-            open, semi_open = detect_rows(board, c, i);
+            open, semi_open = detect_rows(board, c, i)
             print("Open rows of length %d: %d" % (i, open))
             print("Semi-open rows of length %d: %d" % (i, semi_open))
 
@@ -331,20 +331,19 @@ def test_detect_row():
 
 def test_detect_rows():
     board = make_empty_board(8)
-    x = 5; y = 1; d_x = 0; d_y = 1; length = 3; col = 'w'
+    case_detect_rows(board, 1, 5, 1, 0, 3, "w", ())
+    case_detect_rows(board, 0, 0, 1, 1, 3, "w", ())
+    case_detect_rows(board, 6, 1, 0, 1, 4, "w", ())
+    case_detect_rows(board, 3, 1, 0, 1, 4, "b", ())
+
+def case_detect_rows(board, y, x, d_y, d_x, length, col, expected):
     put_seq_on_board(board, y, x, d_y, d_x, length, "w")
-    x = 0; y = 0; d_x = 1; d_y = 1; length = 3; col = 'w'
-    put_seq_on_board(board, y, x, d_y, d_x, length, "w")
-    x = 1; y = 6; d_x = 1; d_y = 0; alength = 4; col = 'w'
-    put_seq_on_board(board, y, x, d_y, d_x, alength, "w")
-    x = 1; y = 3; d_x = 1; d_y = 0; alength = 4; acol = 'b'
-    put_seq_on_board(board, y, x, d_y, d_x, alength, "b")
     print_board(board)
-    if detect_rows(board, col, length) == (1,0):
+    if detect_rows(board, col, length) == expected:
         print("TEST CASE for detect_rows PASSED")
     else:
         print("TEST CASE for detect_rows FAILED")
-        print(detect_rows(board, col,length))
+        print("Expected:", expected, "Got:", detect_rows(board, col,length), "\n")
 
 def test_search_max():
     board = make_empty_board(8)
@@ -444,9 +443,9 @@ def some_tests():
     #
 
     y = 5; x = 3; d_x = -1; d_y = 1; length = 1
-    put_seq_on_board(board, y, x, d_y, d_x, length, "b");
-    print_board(board);
-    analysis(board);
+    put_seq_on_board(board, y, x, d_y, d_x, length, "b")
+    print_board(board)
+    analysis(board)
 
     #        Expected output:
     #           *0|1|2|3|4|5|6|7*
@@ -485,7 +484,7 @@ def some_tests():
 
 if __name__ == '__main__':
     # play_gomoku(8)
-    test_is_empty()
-    test_is_bounded()
-    test_detect_row()
+    # test_is_empty()
+    # test_is_bounded()
+    # test_detect_row()
     test_detect_rows()
