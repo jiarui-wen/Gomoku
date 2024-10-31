@@ -16,6 +16,13 @@ def is_empty(board):
                 return False
     return True
 
+def is_full(board):
+    for r_list in board:
+        for c in r_list:
+            if c == " ":
+                return False
+    return True
+
 
 
 def is_bounded(board, y_end, x_end, length, d_y, d_x):
@@ -188,6 +195,15 @@ def score(board):
 
 
 def is_win(board):
+    if colourwin("w",board):
+        return "White Won"
+    elif colourwin("b",board):
+        return "Black Won"
+    elif is_full(board):
+        return "Draw"
+    return "Continue Playing"
+
+def colourwin(col, board):
     pass
 
 
