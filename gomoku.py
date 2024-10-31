@@ -18,10 +18,10 @@ def is_empty(board):
 
 def emptyspaces(board):
     L=[]
-    for r_list in board:
-        for c in r_list:
-            if c == " ":
-                L.append(c)
+    for r_list in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r_list][c] == " ":
+                L.append((r_list,c))
     return L
 
 
@@ -126,7 +126,7 @@ def detect_row(board, col, y_start, x_start, length, d_y, d_x):
 
     while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]):
         cur_length = 0
-        while board[cur_y][cur_x] == col:
+        while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]) and board[cur_y][cur_x] == col:
             cur_length += 1
             cur_y += d_y
             cur_x += d_x
@@ -213,11 +213,12 @@ def score(board):
             open_b[2] + semi_open_b[2] - open_w[2] - semi_open_w[2])
 
 
+
 def is_win(board):
     if colourwin("w",board):
-        return "White Won"
+        return "White won"
     elif colourwin("b",board):
-        return "Black Won"
+        return "Black won"
     elif len(emptyspaces(board))==0:
         return "Draw"
     return "Continue Playing"
@@ -233,7 +234,7 @@ def colourwin(col, board):
                 return True
             if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
                 return True
-    pass
+    return False
 
 
 def print_board(board):
@@ -513,8 +514,8 @@ def some_tests():
 
 
 if __name__ == '__main__':
-    # play_gomoku(8)
+    print(play_gomoku(8))
     # test_is_empty()
     # test_is_bounded()
     # test_detect_row()
-    test_detect_rows()
+    #test_detect_rows()
