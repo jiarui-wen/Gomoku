@@ -339,11 +339,12 @@ def test_detect_rows():
 def case_detect_rows(board, y, x, d_y, d_x, length, col, expected):
     put_seq_on_board(board, y, x, d_y, d_x, length, "w")
     print_board(board)
-    if detect_rows(board, col, length) == expected:
+    output = detect_rows(board, "w", 3)
+    if output == expected:
         print("TEST CASE for detect_rows PASSED")
     else:
         print("TEST CASE for detect_rows FAILED")
-        print("Expected:", expected, "Got:", detect_rows(board, col,length), "\n")
+        print("Expected:", expected, "Got:", output, "\n")
 
 def test_search_max():
     board = make_empty_board(8)
