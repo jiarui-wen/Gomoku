@@ -204,6 +204,16 @@ def is_win(board):
     return "Continue Playing"
 
 def colourwin(col, board):
+    for i in range(len(board)-5):
+        for j in range(len(board[0])-5):
+            if board[i][j]==col and board[i][j+1]==col and board[i][j+2]==col and board[i][j+3]==col and board[i][j+4]==col:
+                return True
+            if board[i][j]==col and board[i+1][j]==col and board[i+2][j]==col and board[i+3][j]==col and board[i+4][j]==col:
+                return True
+            if board[i][j]==col and board[i+1][j+1]==col and board[i+2][j+2]==col and board[i+3][j+3]==col and board[i+4][j+4]==col:
+                return True
+            if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
+                return True
     pass
 
 
