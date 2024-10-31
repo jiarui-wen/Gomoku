@@ -48,76 +48,6 @@ def is_bounded(board, y_end, x_end, length, d_y, d_x):
     return "OPEN"
 
 
-
-# def detect_row(board, col, y_start, x_start, length, d_y, d_x):
-#
-#     semi_open_seq_count = 0
-#     open_seq_count = 0
-#
-#     cur_y = y_start
-#     cur_x = x_start
-#
-#     while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]):
-#         if board[cur_y][cur_x] == col:
-#             cur_length = 1
-#             for i in range(length - 1):
-#                 cur_y += d_y
-#                 cur_x += d_x
-#                 if cur_y == 0 or cur_y == len(board) or cur_x == 0 or cur_x == len(board[0]):
-#                     if board[cur_y][cur_x] == col:
-#                         cur_length += 1
-#                     break
-#                 elif board[cur_y][cur_x] != col:
-#                     break
-#                 cur_length += 1
-#
-#             if cur_length == length:
-#                 bound = is_bounded(board, cur_y, cur_x, length, d_y, d_x)
-#                 if bound == "SEMIOPEN":
-#                     semi_open_seq_count += 1
-#                 elif bound == "OPEN":
-#                     open_seq_count += 1
-#
-#         else:
-#             cur_y += d_y
-#             cur_x += d_x
-#
-#     return open_seq_count, semi_open_seq_count
-
-# def detect_row(board, col, y_start, x_start, length, d_y, d_x):
-#
-#     semi_open_seq_count = 0
-#     open_seq_count = 0
-#
-#     cur_y = y_start
-#     cur_x = x_start
-#
-#     while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]):
-#         if board[cur_y][cur_x] == col:
-#             cur_length = 1
-#             for i in range(length - 1):
-#                 if cur_y+d_y < 0 or cur_y+d_y > len(board) - 1 or cur_x+d_x < 0 or cur_x+d_x > len(board[0]) - 1:
-#                     break
-#                 elif board[cur_y+d_y][cur_x+d_x] != col:
-#                     cur_y += d_y
-#                     cur_x += d_x
-#                     break
-#                 cur_y += d_y
-#                 cur_x += d_x
-#                 cur_length += 1
-#
-#             if cur_length == length:
-#                 bound = is_bounded(board, cur_y, cur_x, length, d_y, d_x)
-#                 if bound == "SEMIOPEN":
-#                     semi_open_seq_count += 1
-#                 elif bound == "OPEN":
-#                     open_seq_count += 1
-#
-#         cur_y += d_y
-#         cur_x += d_x
-#
-#     return open_seq_count, semi_open_seq_count
-
 def detect_row(board, col, y_start, x_start, length, d_y, d_x):
     semi_open_seq_count = 0
     open_seq_count = 0
@@ -182,6 +112,28 @@ def search_max(board):
         board[e[0]][e[1]] = " "
     return move_y, move_x
 
+
+# def search_max(board):
+#     copy_board = board.copy()
+#     size_y = len(board)
+#     size_x = len(board[0])
+#     empty_spaces = []
+#     for y in range(size_y):
+#         for x in range(size_x):
+#             if copy_board[y][x] == " ":
+#                 empty_spaces.append((y, x))
+#     scores = []
+#     for move in empty_spaces:
+#         copy_board[move[0]][move[1]] = "b"
+#         scores.append(score(copy_board))
+#         copy_board[move[0]][move[1]] = " "
+
+#     max = scores[0]
+#     for s in scores:
+#         if s > max:
+#             max = s
+
+#     return empty_spaces[scores.index(max)]
 
 
 def score(board):
@@ -388,6 +340,7 @@ def test_search_max():
         print("TEST CASE for search_max PASSED")
     else:
         print("TEST CASE for search_max FAILED")
+        print(search_max(board))
 
 def easy_testset_for_main_functions():
     test_is_empty()
