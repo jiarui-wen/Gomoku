@@ -73,6 +73,28 @@ def detect_row(board, col, y_start, x_start, length, d_y, d_x):
 
     return open_seq_count, semi_open_seq_count
 
+def detect_row2(board, col, y_start, x_start, length, d_y, d_x):
+    seq_count = 0
+    cur_y = y_start
+    cur_x = x_start
+
+    while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]):
+        cur_length = 0
+        while cur_y >= 0 and cur_y < len(board) and cur_x >= 0 and cur_x < len(board[0]) and board[cur_y][cur_x] == col:
+            cur_length += 1
+            cur_y += d_y
+            cur_x += d_x
+
+        if cur_length == length:
+            bound = is_bounded(board, cur_y-d_y, cur_x-d_x, length, d_y, d_x)
+            if bound == "CLOSED":
+                seq_count += 1
+
+        cur_y += d_y
+        cur_x += d_x
+
+    return seq_count
+
 
 
 def detect_rows(board, col, length):
@@ -97,6 +119,24 @@ def detect_rows(board, col, length):
     return open_seq_count, semi_open_seq_count
 
 
+
+def detect_rows2(board, col, length):
+    seq_count = 0
+
+    size_y = len(board)
+    size_x = len(board[0])
+
+    for y in range(size_y):
+        for (dy, dx) in [(0,1), (1,0), (1,1), (1,-1)]:
+                c = detect_row2(board, col, y, 0, length, dy, dx)
+                seq_count += c
+
+    for x in range(1, size_x):
+        for (dy, dx) in [(0,1), (1,0), (1,1), (1,-1)]:
+                c = detect_row2(board, col, 0, x, length, dy, dx)
+                seq_count += c
+
+    return seq_count
 
 def search_max(board):
     Li = emptyspaces(board)
@@ -176,10 +216,12 @@ def is_win(board):
     return "Continue Playing"
 
 def colourwin(col, board):
-
     o,s = detect_rows(board, col, 5)
     if o>0 or s>0:
         return True
+    e = detect_rows2(board,col,5)
+    return e>0
+
     # for i in range(len(board)-4):
     #     for j in range(len(board[0])-4):
     #         if board[i][j]==col and board[i][j+1]==col and board[i][j+2]==col and board[i][j+3]==col and board[i][j+4]==col:
@@ -190,7 +232,7 @@ def colourwin(col, board):
     #             return True
     #         if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
     #             return True
-    return False
+    #return False
 
 
 def print_board(board):
