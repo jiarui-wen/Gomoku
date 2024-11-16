@@ -176,16 +176,20 @@ def is_win(board):
     return "Continue Playing"
 
 def colourwin(col, board):
-    for i in range(len(board)-4):
-        for j in range(len(board[0])-4):
-            if board[i][j]==col and board[i][j+1]==col and board[i][j+2]==col and board[i][j+3]==col and board[i][j+4]==col:
-                return True
-            if board[i][j]==col and board[i+1][j]==col and board[i+2][j]==col and board[i+3][j]==col and board[i+4][j]==col:
-                return True
-            if board[i][j]==col and board[i+1][j+1]==col and board[i+2][j+2]==col and board[i+3][j+3]==col and board[i+4][j+4]==col:
-                return True
-            if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
-                return True
+
+    o,s = detect_rows(board, col, 5)
+    if o>0 or s>0:
+        return True
+    # for i in range(len(board)-4):
+    #     for j in range(len(board[0])-4):
+    #         if board[i][j]==col and board[i][j+1]==col and board[i][j+2]==col and board[i][j+3]==col and board[i][j+4]==col:
+    #             return True
+    #         if board[i][j]==col and board[i+1][j]==col and board[i+2][j]==col and board[i+3][j]==col and board[i+4][j]==col:
+    #             return True
+    #         if board[i][j]==col and board[i+1][j+1]==col and board[i+2][j+2]==col and board[i+3][j+3]==col and board[i+4][j+4]==col:
+    #             return True
+    #         if board[i][j+4]==col and board[i+1][j+3]==col and board[i+2][j+2]==col and board[i+3][j+1]==col and board[i+4][j]==col:
+    #             return True
     return False
 
 
